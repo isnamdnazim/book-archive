@@ -51,7 +51,7 @@ const displaySearchResult = data => {
         spinner('none');
 
     }
-
+    searchResult.textContent = '';
     // displaying the book information that are searched by the user
     const dataFound = data.docs;
     dataFound.forEach(book => {
@@ -69,11 +69,13 @@ const displaySearchResult = data => {
                     </div>
                 </div>
         `;
+
         searchResult.appendChild(div)
         showSearchResultNumber('block');
         showSearchResult('flex');
         spinner('none');
     });
+
 
 
 
