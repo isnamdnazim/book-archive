@@ -55,7 +55,6 @@ const displaySearchResult = data => {
     // displaying the book information that are searched by the user
     const dataFound = data.docs;
     dataFound.forEach(book => {
-        console.log(book);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
