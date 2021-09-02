@@ -1,6 +1,7 @@
 // take the search value and fetch the API
 const searchBook = () => {
     const searchBook = document.getElementById('search-field');
+    const noData = document.getElementById('no-data');
     const searchText = searchBook.value;
     searchBook.value = '';
 
@@ -10,23 +11,24 @@ const searchBook = () => {
 
     // showing a alert when user will search with empty string
     if (searchText === '') {
-        alert("Search with a name, please!");
+        // error massage("Search with a name, please!");
+        noData.textContent = '';
+        noData.innerText = "Please Search With a Name";
         spinner('none');
     }
     else {
+        noData.textContent = '';
         //fetch the API
         const url = `https://openlibrary.org/search.json?q=${searchText}`
         fetch(url)
             .then(response => response.json())
-            .then(data => displaySearchResult(data.docs))
+            .then(data => displaySearchResult(data))
     }
 };
 
 
-//
-const displaySearchResult = books => {
-    console.log(books.length);
-    const totalBooksShowing = books.length;
+// showing search result in cards.
+const displaySearchResult = data => {
     const totalBooks = document.getElementById('total-number-of-books');
     const searchResult = document.getElementById('search-result');
     totalBooks.textContent = '';
@@ -34,14 +36,25 @@ const displaySearchResult = books => {
     // Showing the how many books are showing in the page after searching
     const TotalBookDiv = document.createElement('div');
     TotalBookDiv.innerHTML = `
-    <h4 class="mb-5 mt-5 text-uppercase text-center rounded">Total ${totalBooksShowing} Books Showing</h4>
+    <div class="container border rounded mb-5
+    ">
+    <h4 class="mt-5 text-uppercase text-center text-dark">Total <span class="text-success"> ${data.numFound}</span> Books Found By Search.</h4>
+    <h5 class="text-dark  text-center">First <span class="text-success"> ${data.docs.length}</span> Books Showing in this page.</h5>
+    </div> 
     `;
-    totalBooks.appendChild(TotalBookDiv);
+    totalBooks.appendChild(TotalBookDiv)
 
-    searchResult.textContent = '';
+    if (data.numFound === 0) {
+        const noData = document.getElementById('no-data');
+        noData.textContent = '';
+        noData.innerText = "No Result Found";
+        spinner('none');
+
+    }
 
     // displaying the book information that are searched by the user
-    books.forEach(book => {
+    const dataFound = data.docs;
+    dataFound.forEach(book => {
         console.log(book);
         const div = document.createElement('div');
         div.classList.add('col');
@@ -56,7 +69,7 @@ const displaySearchResult = books => {
                     </div>
                 </div>
         `;
-        searchResult.appendChild(div);
+        searchResult.appendChild(div)
         showSearchResultNumber('block');
         showSearchResult('flex');
         spinner('none');
