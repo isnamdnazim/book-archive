@@ -1,0 +1,10 @@
+/* setting the image fix size  */
+.image-hight-weight {
+    height: 360px;
+    width: 100%;
+}
+
+/* spinner display setting when the web page load  */
+#spinner{
+    display: none;
+}
