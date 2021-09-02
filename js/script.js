@@ -82,22 +82,14 @@ const displaySearchResult = data => {
 // spinner toggol
 const spinner = displayType => {
     document.getElementById('spinner').style.display = displayType;
-}
+};
 
 // showing total search result number toggol
 const showSearchResultNumber = displayType => {
     document.getElementById('total-number-of-books').style.display = displayType;
-}
+};
 
 // showing search result toggol
 const showSearchResult = displayType => {
     document.getElementById('search-result').style.display = displayType;
-}
-
-
-
-
-
-fetch('http://openlibrary.org/search.json?q=javascript')
-    .then(response => response.json())
-    .then(data => console.log(data))
+};
